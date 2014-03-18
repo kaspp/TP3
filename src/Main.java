@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -62,45 +61,50 @@ public class Main {
 				l.setText(result);
 				da.clear();
 
-				// ConnectTwitter ct = new ConnectTwitter();
-				// AnalyseTrend at = new AnalyseTrend();
-				// at.insert("bubbletea", "positive");
-
 			}
 		});
 
 		allAna.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent evt) {
+
 				fr = new JFrame("Analysed Data");
-				
+				fr.setResizable(false);
 				fr.setLayout(new BorderLayout());
-				
+
 				JPanel AllWords = new JPanel(), tt = new JPanel();
-				
-				JScrollPane aw = new JScrollPane(AllWords), tfive = new JScrollPane(tt);
-	
+
+				JScrollPane aw = new JScrollPane(AllWords), tfive = new JScrollPane(
+						tt);
+
 				JTabbedPane tabbedPane = new JTabbedPane();
-				
-				
+
 				// ================== SHOW ALL WORDS ================== //
+				
 				JLabel view = new JLabel();
 
+				
 				fr.setSize(500, 400);
 				ArrayList<String> food = at.AnalysedFood();
 
+				
 				String forAllWords = "<html>";
 
+				
 				for (String temp : food) {
-
-					forAllWords += "<b>" + temp + "</b>" + "<br> Positive Count :"
-							+ at.getPositive(temp) + " <br> Negative Count"
-							+ ":" + at.getNegative(temp) + "<br><br>";
+					forAllWords += "<b>" + temp + "</b>"
+							+ "<br> Positive Count :" + at.getPositive(temp)
+							+ " <br> Negative Count" + ":"
+							+ at.getNegative(temp) + "<br>" + "Neutral: "
+							+ at.getNeutral(temp) + "<br><br>";
 				}
 
+				
+				forAllWords += "</html>";
 				AllWords.setLayout(new BorderLayout());
 				view.setText(forAllWords);
 
+				
 				JButton close = new JButton("Close");
 				AllWords.add(view, BorderLayout.CENTER);
 				close.addActionListener(new ActionListener() {
@@ -109,47 +113,42 @@ public class Main {
 						fr.setVisible(false);
 					}
 				});
-				
-				
+
 				// ================== TOP TREND ================== //
-				
-				
+
 				JLabel displayTT = new JLabel();
 				String forTT = "<html> <b> TOP 5 Food Trending </b><br><br>";
+
 				
 				ArrayList<String> tf = at.topFive(1);
 				int count = 1;
 				for (String temp : tf) {
-					forTT += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + temp + "<br>";
+					forTT += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + temp
+							+ "<br>";
 					count++;
 				}
+
 				
 				forTT += "<br> <b> BOTTOM 5 Food Trending </b> <br><br>";
-				
+
 				tf = at.topFive(2);
 				count = 1;
 				for (String temp : tf) {
-					forTT += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + temp + "<br>";
+					forTT += count + ".&nbsp;&nbsp;&nbsp;&nbsp;" + temp
+							+ "<br>";
 					count++;
 				}
-				
-				
+
 				displayTT.setText(forTT);
 				tt.add(displayTT);
-				
+
 				tabbedPane.addTab("All Words", aw);
-				tabbedPane.addTab("Top Trend", tfive);
-				
-				
-				
-				
-				fr.add(close, BorderLayout.SOUTH);				
+				tabbedPane.addTab("Trending", tfive);
+
+				fr.add(close, BorderLayout.SOUTH);
 				fr.add(tabbedPane);
 				fr.setVisible(true);
 
-				
-				
-				
 			}
 		});
 
@@ -168,14 +167,6 @@ public class Main {
 
 	}
 
-	public static void showDialog(String input, String title) {
-		String[] options = { "OK" };
-		JPanel panel = new JPanel();
-		JLabel lbl = new JLabel(input);
-		panel.add(lbl);
-		JOptionPane.showOptionDialog(null, panel, title, JOptionPane.NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-	}
 
 }

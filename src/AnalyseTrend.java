@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ public class AnalyseTrend {
 	private static final String password = "derrick";
 	private static final String connStr = "jdbc:postgresql://localhost:5432/TP3";
 	private static Connection conn;
-	private static PreparedStatement insertStmt, getPosStmt, getNegStmt,
+	private static PreparedStatement insertStmt, getPosStmt, getNegStmt, pStmt,
 			grabAllFoodStmt;
 
 	
@@ -46,6 +47,28 @@ public class AnalyseTrend {
 	public int getPositive(String food) {
 
 		String sql = "SELECT food, count(food) FROM analysed WHERE food = ? AND sentiment = 'positive' GROUP BY food";
+
+		try {
+			getPosStmt = conn.prepareStatement(sql);
+			getPosStmt.setString(1, food);
+
+			ResultSet results = getPosStmt.executeQuery();
+			while (results.next()) {
+				return results.getInt(2);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out
+					.println("Unable to execute command in selecting positive sentiment");
+		}
+
+		return 0;
+	}
+	
+	
+	public int getNeutral(String food) {
+		String sql = "SELECT food, count(food) FROM analysed WHERE food = ? AND sentiment = 'NULL' GROUP BY food";
 
 		try {
 			getPosStmt = conn.prepareStatement(sql);
@@ -175,6 +198,8 @@ public class AnalyseTrend {
 			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='positive' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
 		} else if (i == 2) {
 			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='negative' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
+		} else if (i == 3) {
+			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='null' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
 		} else {
 			return null;
 		}
@@ -191,6 +216,31 @@ public class AnalyseTrend {
 		}
 
 		return food;
+	}
+	
+	public boolean StoreTweet(Tweet t) {
+		
+		String insert = "INSERT INTO tweet( username, content, location, lon, lat, dates) VALUES (?, ?, ?, ?, ?, ?)";
+	
+		
+			try {
+
+				pStmt = conn.prepareStatement(insert);
+				pStmt.setString(1, t.getUsername());
+				pStmt.setString(2, t.getContent());
+				pStmt.setString(3, t.getLocation());
+				pStmt.setDouble(4, t.getGeo().getLongitude());
+				pStmt.setDouble(5, t.getGeo().getLatitude());
+				pStmt.setString(6, t.getDate().toString());
+
+				return (pStmt.executeUpdate() > 0);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Unable to execute command in insert path");
+				return false;
+			} 
+	
 	}
 
 }

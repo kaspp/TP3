@@ -135,6 +135,122 @@ public class DoAnalyse {
 		return check;
 	}
 
+	
+	public ArrayList<String> checkTweet(Tweet t) {
+		
+		String phrase = t.getContent();
+		
+		String[] slit = phrase.split(" ");
+		check = new ArrayList<String>();
+		String wordcheck = "";
+		boolean fp = false;
+		int senti = 0;
+		ArrayList<String> thatFood = new ArrayList<String>();
+	
+		
+		for (int i = 0; i < slit.length; i++) {
+			for (int j = 0; j < slit.length; j++) {
+				if (i == j) {
+					wordcheck = slit[i];
+				} else if (j < i) { 
+					continue;
+				} else {
+					wordcheck += " " + slit[j];
+				}
+				
+				checkWord(wordcheck);
+				switch (checkWord(wordcheck)) {
+				case 1:
+					check.add("Food category found");
+					thatFood.add(wordcheck);
+					fp = true;
+					break;
+
+				case 2:
+					check.add("Country found");
+					break;
+
+				case 3:
+					check.add("Cooking terms found");
+					thatFood.add(wordcheck);
+					break;
+
+				case 4:
+					check.add("Negative sentiments found");
+					if (senti == 0)
+						senti = 1;
+					else if (senti == 2) {
+						senti = -1;
+					}
+					break;
+
+				case 5:
+					check.add("Positive sentiments found");
+					if (senti == 0)
+						senti = 2;
+					else if (senti == 1) 
+						senti = -1;
+					break;
+
+				case 6:
+					check.add("Restaurant found");
+					thatFood.add(wordcheck);
+					break;
+
+				default:
+					// do nothing.
+					break;
+				}
+
+			}
+			
+
+		}
+
+		
+		// check multiple.
+		// added new line here only.
+		if (fp) {
+			check.add("The statement is a food post!");
+			
+			if (at.StoreTweet(t)) {
+				System.out.println("Tweet Stored");
+			} else {
+				System.out.println("Tweet Not Stored");
+			}
+			
+			
+			if (senti == 2) {
+				for (String temp : thatFood) {
+					at.insert(temp, "positive");
+					
+					
+				}
+			} else if (senti == 1){
+				for (String temp : thatFood) {
+					at.insert(temp, "negative");
+					
+				}
+			}
+			
+			else if (senti == 0) {
+				for (String temp : thatFood) { 
+					at.insert(temp, "NULL");
+				}
+			}
+
+		} else
+			check.add("The statement is not a food post!");
+		
+		if (senti == -1) {
+			check.add("There are mixed sentiments in the post. No sentiments captured.");
+		}
+
+		return check;
+
+	}
+	
+	
 	/**
 	 * Check if the word is in the database return the number on which arraylist is the word found in.
 	 * 
@@ -148,7 +264,7 @@ public class DoAnalyse {
 		for (ArrayList<String> p : collate) {
 			count++;
 			if (p.contains(word.toUpperCase())) {
-				System.out.println("Found " + word);
+				//System.out.println("Found " + word);
 				return count;
 
 			} 
@@ -173,5 +289,7 @@ public class DoAnalyse {
 		collate.add(restr);
 
 	}
+	
+	
 
 }
