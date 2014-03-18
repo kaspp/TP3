@@ -1,8 +1,8 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ConnectToDB {
@@ -10,72 +10,183 @@ public class ConnectToDB {
 	/*
 	 * Do Whatever Database Connection here!
 	 */
-	/*
+
+	private static final String username = "postgres";
+	private static final String password = "derrick";
+	private static final String connStr = "jdbc:postgresql://localhost:5432/TP3";
+	private static PreparedStatement pStmt;
 	
-	String url = "jdbc:mysql://219.74.84.8:3306/";
-	String dbName = "splunk";
-	String driver = "com.mysql.jdbc.Driver";
-	String userName = "root";
-	String password = "P@ssw0rd";
 
 	Connection conn;
-	
-	*/
+
 	boolean isConnected = false;
 
 	public ConnectToDB() {
 		try {
-		/*	
-			Class.forName(driver).newInstance();
-			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+			Class.forName("org.postgresql.Driver");
+		} catch (Exception e) {
+			System.out.println("Error looking for Driver");
+		}
+		
+		
+		try {
+			conn = DriverManager.getConnection(connStr, username, password);
 			
-			*/
 			isConnected = true;
 			
 		} catch (Exception e) {
-			System.err.println("Error Connecting to Database");
+			System.out.println("Failure to obtain connection: " + connStr);
 		}
 	}
 
-	
-	public void close()  {
+	public void close() {
 		isConnected = false;
-		//conn.close();
+		// conn.close();
 	}
-	
+
 	public boolean getDBConnection() {
 		return isConnected;
 	}
-	
-	
-	public ArrayList<String> retriDict(String link) {
+
+	public ArrayList<String> getFood() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM food";
 		
-		BufferedReader br = null;
-		ArrayList<String> neg = new ArrayList<String>();
 		try {
-			String sCurrentLine;
-			br = new BufferedReader(new FileReader(link));		
-			while ((sCurrentLine = br.readLine()) != null) {			
-				neg.add(sCurrentLine.toUpperCase());
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
 			}
-		} catch (IOException e) {
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
+		}
+		
+		return word;
+		
+		
+	}
+
+	public ArrayList<String> getPos() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM positive";
+		
+		try {
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
 			}
-		}	
-		return neg;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return word;
+		
+		
 	}
 	
+	public ArrayList<String> getNeg() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM negative";
+		
+		try {
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return word;
+		
+	}
 	
-	public void getItem() {
-		/*
-		 * SQL here!
-		 */
+	public ArrayList<String> getCountry() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM country";
+		
+		try {
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return word;
+	}
+	
+	public ArrayList<String> getCt() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM cookingterm";
+		
+		try {
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return word;
+		
+		
+	}
+	
+	public ArrayList<String> getRestr() {
+
+		ArrayList<String> word = new ArrayList<String>();
+		String sql = "SELECT word FROM restr";
+		
+		try {
+			
+			pStmt = conn.prepareStatement(sql);
+			ResultSet results = pStmt.executeQuery();
+			
+			while (results.next()) {
+				word.add(results.getString(1).toUpperCase());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return word;
+		
+		
 	}
 
 }

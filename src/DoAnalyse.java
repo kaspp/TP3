@@ -10,189 +10,160 @@ public class DoAnalyse {
 	ArrayList<String> ct = new ArrayList<String>();
 	ArrayList<ArrayList<String>> collate = new ArrayList<ArrayList<String>>();
 	ArrayList<String> chk = new ArrayList<String>();
-	ArrayList<Integer> check;
+	ArrayList<String> check;
+	AnalyseTrend at = new AnalyseTrend();
 
 	public DoAnalyse() {
 		db = new ConnectToDB();
 		init();
 
 	}
-
+	/**
+	 * Clear everything inside the cache.
+	 * @author kaspp - Derrick
+	 */
 	public void clear() {
 		chk.clear();
 		check.clear();
 	}
 
-	public ArrayList<String> doCheck() {
-		for (int temp : check) {
-			switch (temp) {
-			case 1:
-				chk.add("Food category found");
-
-				break;
-
-			case 2:
-				chk.add("Country found");
-				break;
-
-			case 3:
-				chk.add("Cooking terms found");
-				break;
-
-			case 4:
-				chk.add("Negative Sentiments found");
-				break;
-
-			case 5:
-				chk.add("Positive Sentiments found");
-				break;
-
-			case 6:
-				chk.add("Restaurant found");
-				break;
-
-			default:
-				// do nothing.
-				break;
-
-			}
-		}
-
-		return chk;
-	}
-
+	/**
+	 * Check the phrase. 
+	 * After string is passed in, it check every word that is in the phrase.
+	 *
+	 * @param phrase
+	 * @return ArrayList<String>
+	 * @author kaspp - Derrick
+	 */
 	public ArrayList<String> checkPhrase(String phrase) {
 
 		String[] slit = phrase.split(" ");
-		check = new ArrayList<Integer>();
-
-		// check multiple. 
-		// added new line here only.
+		check = new ArrayList<String>();
+		String wordcheck = "";
+		boolean fp = false;
+		int senti = 0;
+		ArrayList<String> thatFood = new ArrayList<String>();
+	
+		
 		for (int i = 0; i < slit.length; i++) {
 			for (int j = 0; j < slit.length; j++) {
 				if (i == j) {
-					String word = slit[i];
-					switch (checkWord(word)) {
-					case 1:
-						check.add(1);
-
-						break;
-
-					case 2:
-						check.add(2);
-						break;
-
-					case 3:
-						check.add(3);
-						break;
-
-					case 4:
-						check.add(4);
-						break;
-
-					case 5:
-						check.add(5);
-						break;
-
-					case 6:
-						check.add(6);
-						break;
-
-					default:
-						// do nothing.
-						break;
-					}
+					wordcheck = slit[i];
+				} else if (j < i) { 
+					continue;
 				} else {
-					String word = slit[i] + " " + slit[j];
-					switch (checkWord(word)) {
-					case 1:
-						check.add(1);
-
-						break;
-
-					case 2:
-						check.add(2);
-						break;
-
-					case 3:
-						check.add(3);
-						break;
-
-					case 4:
-						check.add(4);
-						break;
-
-					case 5:
-						check.add(5);
-						break;
-
-					case 6:
-						check.add(6);
-						break;
-
-					default:
-						// do nothing.
-						break;
-					}
+					wordcheck += " " + slit[j];
 				}
+				
+				System.out.println(wordcheck);
+				switch (checkWord(wordcheck)) {
+				case 1:
+					check.add("Food category found");
+					thatFood.add(wordcheck);
+					fp = true;
+					break;
+
+				case 2:
+					check.add("Country found");
+					break;
+
+				case 3:
+					check.add("Cooking terms found");
+					thatFood.add(wordcheck);
+					break;
+
+				case 4:
+					check.add("Negative sentiments found");
+					if (senti != 2)
+						senti = 1;
+					else if (senti == 2) {
+						senti = -1;
+					}
+					break;
+
+				case 5:
+					check.add("Positie sentiments found");
+					if (senti != 1)
+						senti = 2;
+					else if (senti == 1) 
+						senti = -1;
+					break;
+
+				case 6:
+					check.add("Restaurant found");
+					thatFood.add(wordcheck);
+					break;
+
+				default:
+					// do nothing.
+					break;
+				}
+
 			}
+			
+
 		}
 
-		if (check.contains(1)) {
-			chk.add("The statement is a food post!");
-		} else
-			chk.add("The statement is not a food post!");
+		
+		// check multiple.
+		// added new line here only.
+		if (fp) {
+			check.add("The statement is a food post!");
+			if (senti == 1)
+				for (String temp : thatFood) {
+					at.insert(temp, "positive");
+				}
+			else if (senti == 2){
+				for (String temp : thatFood) {
+					at.insert(temp, "negative");
+				}
+			}
+			
+			else if (senti == 0) {
+				for (String temp : thatFood) { 
+					at.insert(temp, "NULL");
+				}
+			}
 
-		return doCheck();
+		} else
+			check.add("The statement is not a food post!");
+		
+		if (senti == -1) {
+			check.add("There are mixed sentiments in the post. No sentiments captured.");
+		}
+
+		return check;
 	}
 
+	/**
+	 * Check if the word is in the database return the number on which arraylist is the word found in.
+	 * 
+	 * @param food - String
+	 * @return int - count
+	 * @author kaspp - Derrick
+	 */
 	public int checkWord(String word) {
-		boolean ifcontained = false;
+
 		int count = 0;
 		for (ArrayList<String> p : collate) {
 			count++;
 			if (p.contains(word.toUpperCase())) {
-				ifcontained = true;
-				break;
-			}
-		}
+				System.out.println("Found " + word);
+				return count;
 
-		if (ifcontained) {
-			switch (count) {
-			case 1:
-				return 1;
-
-			case 2:
-				return 2;
-
-			case 3:
-				return 3;
-
-			case 4:
-				return 4;
-
-			case 5:
-				return 5;
-
-			case 6:
-				return 6;
-			}
-
-		} else {
-			System.out.println("The word is not found!");
-			return 0;
+			} 
 		}
 		return 0;
 	}
 
 	public void init() {
 
-		food = db.retriDict("food.txt");
-		country = db.retriDict("country.txt");
-		ct = db.retriDict("cookingterms.txt");
-		neg = db.retriDict("negativewords.txt");
-		pos = db.retriDict("positivewords.txt");
-		restr = db.retriDict("restr.txt");
+		food = db.getFood();
+		country = db.getCountry();
+		ct = db.getCt();
+		neg = db.getNeg();
+		pos = db.getPos();
+		restr = db.getRestr();
 
 		collate.add(food);
 		collate.add(country);

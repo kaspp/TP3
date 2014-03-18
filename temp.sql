@@ -1,0 +1,1 @@
+INSERT INTO analysed(food, dates, sentiment) VALUES ( ?, now(), ?)
