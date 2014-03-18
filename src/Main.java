@@ -39,7 +39,7 @@ public class Main {
 		JButton tweet = new JButton();
 		tweet.setText("Analyze");
 
-		JButton allAna = new JButton("The analyse");
+		JButton allAna = new JButton("Analyse Report");
 
 		tweet.addActionListener(new ActionListener() {
 

@@ -74,7 +74,7 @@ public class DoAnalyse {
 
 				case 4:
 					check.add("Negative sentiments found");
-					if (senti != 2)
+					if (senti == 0)
 						senti = 1;
 					else if (senti == 2) {
 						senti = -1;
@@ -82,8 +82,8 @@ public class DoAnalyse {
 					break;
 
 				case 5:
-					check.add("Positie sentiments found");
-					if (senti != 1)
+					check.add("Positive sentiments found");
+					if (senti == 0)
 						senti = 2;
 					else if (senti == 1) 
 						senti = -1;
@@ -109,11 +109,11 @@ public class DoAnalyse {
 		// added new line here only.
 		if (fp) {
 			check.add("The statement is a food post!");
-			if (senti == 1)
+			if (senti == 2) {
 				for (String temp : thatFood) {
 					at.insert(temp, "positive");
 				}
-			else if (senti == 2){
+			} else if (senti == 1){
 				for (String temp : thatFood) {
 					at.insert(temp, "negative");
 				}
