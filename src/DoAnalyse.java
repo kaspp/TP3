@@ -111,17 +111,17 @@ public class DoAnalyse {
 			check.add("The statement is a food post!");
 			if (senti == 2) {
 				for (String temp : thatFood) {
-					at.insert(temp, "positive");
+					at.insert(temp, "positive", 0);
 				}
 			} else if (senti == 1){
 				for (String temp : thatFood) {
-					at.insert(temp, "negative");
+					at.insert(temp, "negative", 0);
 				}
 			}
 			
 			else if (senti == 0) {
 				for (String temp : thatFood) { 
-					at.insert(temp, "NULL");
+					at.insert(temp, "NULL", 0);
 				}
 			}
 
@@ -222,20 +222,18 @@ public class DoAnalyse {
 			
 			if (senti == 2) {
 				for (String temp : thatFood) {
-					at.insert(temp, "positive");
+					at.insert(temp, "positive", at.getTweetID(t));
 					
 					
 				}
 			} else if (senti == 1){
 				for (String temp : thatFood) {
-					at.insert(temp, "negative");
+					at.insert(temp, "negative", at.getTweetID(t));
 					
 				}
-			}
-			
-			else if (senti == 0) {
+			} else {
 				for (String temp : thatFood) { 
-					at.insert(temp, "NULL");
+					at.insert(temp, "NULL", at.getTweetID(t));
 				}
 			}
 

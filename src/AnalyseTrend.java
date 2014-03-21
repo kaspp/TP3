@@ -130,9 +130,9 @@ public class AnalyseTrend {
 	 * @return boolean
 	 * @author kaspp - Derrick
 	 */
-	public boolean insert(String food, String sentimental) {
+	public boolean insert(String food, String sentimental, int id) {
 
-		String insert = "INSERT INTO analysed(food, dates, sentiment) VALUES ( ?, now(), ?) ";
+		String insert = "INSERT INTO analyzed(food, tweetid, sentimental, dates) VALUES (?, ?, ?, now()); ";
 		// System.out.println(insert);
 
 		if (sentimental.equals("positive") || sentimental.equals("negative")
@@ -142,7 +142,8 @@ public class AnalyseTrend {
 
 				insertStmt = conn.prepareStatement(insert);
 				insertStmt.setString(1, food);
-				insertStmt.setString(2, sentimental);
+				insertStmt.setInt(2, id);
+				insertStmt.setString(3, sentimental);
 
 				return (insertStmt.executeUpdate() > 0);
 
@@ -156,7 +157,30 @@ public class AnalyseTrend {
 		}
 
 	}
+	
+	/** Get the id for that tweet;
+	 * @param t - Tweet object
+	 * @author kaspp - Derrick
+	 */
 
+	public int getTweetID(Tweet t) {
+		String find = "SELECT id FROM tweet WHERE content = ?";
+		
+		try { 
+			insertStmt = conn.prepareStatement(find);
+			insertStmt.setString(1, t.getContent());
+			
+			ResultSet r = insertStmt.executeQuery();
+			
+			while (r.next()) {
+				return r.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to execute command in insert path");
+			return -1;
+		}
+		return -1;
+	}
 	/**
 	 * Return ALL the different type of food in the database
 	 * 

@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import twitter4j.*;
+import twitter4j.FilterQuery;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterException;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
 
 /**
  * <p>
@@ -34,7 +42,8 @@ public final class sporeTweetEnglish {
 	 */
 	public static void main(String[] args) throws TwitterException {
 		TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
-		final Tweet t = new Tweet();
+		
+		final ExecutorService executor = Executors.newFixedThreadPool(5);
 		StatusListener listener = new StatusListener() {
 
 			@Override
@@ -57,46 +66,11 @@ public final class sporeTweetEnglish {
 
 			@Override
 			public void onStatus(Status status) {
-				User user = status.getUser();
-
-				System.out.println("\n#####################################");
-
-				// gets Username
-				t.setUsername(status.getUser().getScreenName());
-				// String username = status.getUser().getScreenName();
-				// System.out.println("Username1: "+username);
-
-				// gets location
-				t.setLocation(user.getLocation());
-				// String profileLocation = user.getLocation();
-				// System.out.println("Location1: "+profileLocation);
-
-				// get content
-				t.setContent(status.getText());
-				// String content = status.getText();
-				// System.out.println(content +"\n");
-
-				t.setGeo(status.getGeoLocation());
-				// GeoLocation g = status.getGeoLocation();
-				// System.out.println("Lang: "+g.getLatitude()+
-				// "Long: "+g.getLongitude());
-
-				t.setDate(status.getCreatedAt());
-				// Date date = status.getCreatedAt();
-				// System.out.println("Date: "+date.toString());
-
-				System.out.println("Username: " + t.getUsername());
-				System.out.println("Location: " + t.getLocation());
-				System.out.println("Tweet: " + t.getContent());
-				System.out.println("Lang: " + t.getGeo().getLatitude()
-						+ " Long: " + t.getGeo().getLongitude());
-				System.out.println("Created Date: " + t.getDate().toString());
-
-				System.out.println("\n#####################################");
-				DoAnalyse da = new DoAnalyse();
-
-				da.checkTweet(t);
-				AnalyseTrend at = new AnalyseTrend();
+				//do something here.
+				
+				Runnable worker = new WorkerThread(status);
+				executor.execute(worker);
+				
 				
 			}
 
@@ -113,6 +87,7 @@ public final class sporeTweetEnglish {
 			}
 
 		};
+
 		FilterQuery fq = new FilterQuery();
 		String[] lang = { "en" };
 		fq.language(lang);
@@ -121,5 +96,8 @@ public final class sporeTweetEnglish {
 
 		twitterStream.addListener(listener);
 		twitterStream.filter(fq);
+		//executor.shutdown();
+		while(!executor.isTerminated());
+
 	}
 }
