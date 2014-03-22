@@ -8,13 +8,13 @@
 	<classpathentry kind="lib" path="lib/twitter4j-examples-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-media-support-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-stream-3.0.5.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/jcommon-0.7.2.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/jfreechart-0.9.6.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/jxl.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/mm.mysql-2.0.4-bin.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/poi-3.0-alpha2-20060616.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/poi-scratchpad-3.0-alpha2-20060616.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/postgresql-9.2-1002.jdbc4.jar"/>
-	<classpathentry kind="lib" path="/DB3 Lab 3/tonicpoint.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jcommon-0.7.2.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jfreechart-0.9.6.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jxl.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/mm.mysql-2.0.4-bin.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/poi-3.0-alpha2-20060616.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/poi-scratchpad-3.0-alpha2-20060616.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/tonicpoint.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
