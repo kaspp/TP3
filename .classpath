@@ -2,19 +2,19 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/jcommon-0.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-0.9.6.jar"/>
+	<classpathentry kind="lib" path="lib/jxl.jar"/>
+	<classpathentry kind="lib" path="lib/mm.mysql-2.0.4-bin.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.29-bin.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.0-alpha2-20060616.jar"/>
+	<classpathentry kind="lib" path="lib/poi-scratchpad-3.0-alpha2-20060616.jar"/>
+	<classpathentry kind="lib" path="lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/tonicpoint.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-async-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-core-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-examples-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-media-support-3.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-stream-3.0.5.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jcommon-0.7.2.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jfreechart-0.9.6.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/jxl.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/mm.mysql-2.0.4-bin.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/poi-3.0-alpha2-20060616.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/poi-scratchpad-3.0-alpha2-20060616.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/postgresql-9.2-1002.jdbc4.jar"/>
-	<classpathentry kind="lib" path="E:/SIT UoG CS/Year 1/Team Project 3/workspace/TP3/lib/tonicpoint.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
