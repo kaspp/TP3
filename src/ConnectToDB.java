@@ -13,7 +13,7 @@ public class ConnectToDB {
 	 */
 
 	private static final String username = "postgres";
-	private static final String password = "derrick";
+	private static final String password = "Password";
 	private static final String connStr = "jdbc:postgresql://localhost:5432/TP3";
 	private static PreparedStatement pStmt;
 	

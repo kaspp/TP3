@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class AnalyseTrend {
 	ArrayList<String> food = new ArrayList<String>();
 	private static final String username = "postgres";
-	private static final String password = "derrick";
+	private static final String password = "Password";
 	private static final String connStr = "jdbc:postgresql://localhost:5432/TP3";
 	private static Connection conn;
 	private static PreparedStatement insertStmt, getPosStmt, getNegStmt, pStmt,
@@ -46,7 +46,7 @@ public class AnalyseTrend {
 	 */
 	public int getPositive(String food) {
 
-		String sql = "SELECT food, count(food) FROM analysed WHERE food = ? AND sentiment = 'positive' GROUP BY food";
+		String sql = "SELECT food, count(food) FROM analyzed WHERE food = ? AND sentimental = 'positive' GROUP BY food";
 
 		try {
 			getPosStmt = conn.prepareStatement(sql);
@@ -60,7 +60,7 @@ public class AnalyseTrend {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out
-					.println("Unable to execute command in selecting positive sentiment");
+					.println("Unable to execute command in selecting positive sentimental");
 		}
 
 		return 0;
@@ -68,7 +68,7 @@ public class AnalyseTrend {
 	
 	
 	public int getNeutral(String food) {
-		String sql = "SELECT food, count(food) FROM analysed WHERE food = ? AND sentiment = 'NULL' GROUP BY food";
+		String sql = "SELECT food, count(food) FROM analyzed WHERE food = ? AND sentimental = 'NULL' GROUP BY food";
 
 		try {
 			getPosStmt = conn.prepareStatement(sql);
@@ -82,7 +82,7 @@ public class AnalyseTrend {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out
-					.println("Unable to execute command in selecting positive sentiment");
+					.println("Unable to execute command in selecting positive sentimental");
 		}
 
 		return 0;
@@ -98,7 +98,7 @@ public class AnalyseTrend {
 	 */
 	public int getNegative(String food) {
 
-		String sql = "SELECT food, count(food) FROM analysed WHERE food = ? AND sentiment = 'negative' GROUP BY food";
+		String sql = "SELECT food, count(food) FROM analyzed WHERE food = ? AND sentimental = 'negative' GROUP BY food";
 
 		try {
 			getNegStmt = conn.prepareStatement(sql);
@@ -112,7 +112,7 @@ public class AnalyseTrend {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out
-					.println("Unable to execute command in selecting negative sentiment");
+					.println("Unable to execute command in selecting negative sentimental");
 		}
 
 		return 0;
@@ -190,7 +190,7 @@ public class AnalyseTrend {
 	public ArrayList<String> AnalysedFood() {
 		ArrayList<String> food = new ArrayList<String>();
 
-		String sql = "SELECT DISTINCT food FROM analysed GROUP BY food";
+		String sql = "SELECT DISTINCT food FROM analyzed GROUP BY food";
 
 		try {
 
@@ -219,11 +219,11 @@ public class AnalyseTrend {
 		ArrayList<String> food = new ArrayList<String>();
 		String sql = null;
 		if (i == 1) {
-			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='positive' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
+			sql = "SELECT food, COUNT(food) FROM analyzed WHERE sentimental='positive' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
 		} else if (i == 2) {
-			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='negative' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
+			sql = "SELECT food, COUNT(food) FROM analyzed WHERE sentimental='negative' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
 		} else if (i == 3) {
-			sql = "SELECT food, COUNT(food) FROM analysed WHERE sentiment='null' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
+			sql = "SELECT food, COUNT(food) FROM analyzed WHERE sentimental='null' GROUP BY food ORDER BY COUNT(food) DESC LIMIT 5";
 		} else {
 			return null;
 		}
