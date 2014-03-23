@@ -190,5 +190,9 @@ public class ConnectToDB {
 		
 	}
 	
+	public void closeConnection() throws SQLException {
+		conn.close();
+		conn = null;
+	}
 
 }

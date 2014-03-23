@@ -266,5 +266,10 @@ public class AnalyseTrend {
 			} 
 	
 	}
+	
+	public void closeConnection() throws SQLException {
+		conn.close();
+		conn = null;
+	}
 
 }

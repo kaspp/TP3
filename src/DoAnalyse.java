@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DoAnalyse {
@@ -131,7 +132,14 @@ public class DoAnalyse {
 		if (senti == -1) {
 			check.add("There are mixed sentiments in the post. No sentiments captured.");
 		}
-
+		
+		try {
+			at.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return check;
 	}
 
@@ -158,7 +166,7 @@ public class DoAnalyse {
 					wordcheck += " " + slit[j];
 				}
 				
-				checkWord(wordcheck);
+				//checkWord(wordcheck);
 				switch (checkWord(wordcheck)) {
 				case 1:
 					check.add("Food category found");
@@ -222,18 +230,18 @@ public class DoAnalyse {
 			
 			if (senti == 2) {
 				for (String temp : thatFood) {
-					at.insert(temp, "positive", at.getTweetID(t));
+					at.insert(temp.toLowerCase(), "positive", at.getTweetID(t));
 					
 					
 				}
 			} else if (senti == 1){
 				for (String temp : thatFood) {
-					at.insert(temp, "negative", at.getTweetID(t));
+					at.insert(temp.toLowerCase(), "negative", at.getTweetID(t));
 					
 				}
 			} else {
 				for (String temp : thatFood) { 
-					at.insert(temp, "NULL", at.getTweetID(t));
+					at.insert(temp.toLowerCase(), "NULL", at.getTweetID(t));
 				}
 			}
 
@@ -243,7 +251,14 @@ public class DoAnalyse {
 		if (senti == -1) {
 			check.add("There are mixed sentiments in the post. No sentiments captured.");
 		}
-
+		
+		try {
+			at.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return check;
 
 	}
@@ -278,7 +293,14 @@ public class DoAnalyse {
 		neg = db.getNeg();
 		pos = db.getPos();
 		restr = db.getRestr();
-
+		
+		try {
+			db.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		collate.add(food);
 		collate.add(country);
 		collate.add(ct);

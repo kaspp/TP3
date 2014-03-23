@@ -48,7 +48,7 @@ public class WorkerThread implements Runnable{
 		System.out.println("Location: " + t.getLocation());
 		System.out.println("Tweet: " + t.getContent());
 
-		if (t.getGeo().getLatitude() > 0) {
+		if (t.getGeo() != null) {
 		System.out.println("Lang: " + t.getGeo().getLatitude()
 				+ " Long: " + t.getGeo().getLongitude());
 		} 	
