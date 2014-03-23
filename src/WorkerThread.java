@@ -10,7 +10,7 @@ public class WorkerThread implements Runnable{
 	Status status;
 //	DoAnalyse da = new DoAnalyse();
 	DoAnalyse da;
-	AnalyseTrend at = new AnalyseTrend();
+	//AnalyseTrend at = new AnalyseTrend();
 	
 	public WorkerThread(Status s, ArrayList<ArrayList<String>> collate)  {
 		this.status = s;

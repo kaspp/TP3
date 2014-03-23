@@ -12,7 +12,7 @@ public class DoAnalyse {
 	private ArrayList<ArrayList<String>> collate = new ArrayList<ArrayList<String>>();
 	ArrayList<String> chk = new ArrayList<String>();
 	ArrayList<String> check;
-	AnalyseTrend at = new AnalyseTrend();
+//	AnalyseTrend at = new AnalyseTrend();
 
 	public DoAnalyse() {
 		db = new ConnectToDB();
@@ -23,7 +23,6 @@ public class DoAnalyse {
 	
 	public DoAnalyse(ArrayList<ArrayList<String>> collate)
 	{
-		db = new ConnectToDB();
 		setCollate(collate);
 		
 	}
@@ -128,6 +127,7 @@ public class DoAnalyse {
 		// added new line here only.
 		if (fp) {
 			check.add("The statement is a food post!");
+			AnalyseTrend at = new AnalyseTrend();
 			if (senti == 2) {
 				for (String temp : thatFood) {
 					at.insert(temp, "positive", 0);
@@ -143,6 +143,13 @@ public class DoAnalyse {
 					at.insert(temp, "NULL", 0);
 				}
 			}
+			
+			try {
+				at.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else
 			check.add("The statement is not a food post!");
@@ -151,12 +158,7 @@ public class DoAnalyse {
 			check.add("There are mixed sentiments in the post. No sentiments captured.");
 		}
 		
-		try {
-			at.closeConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return check;
 	}
@@ -237,8 +239,9 @@ public class DoAnalyse {
 		// check multiple.
 		// added new line here only.
 		if (fp) {
-			check.add("The statement is a food post!");
 			
+			check.add("The statement is a food post!");
+			AnalyseTrend at = new AnalyseTrend();
 			if (at.StoreTweet(t)) {
 				System.out.println("Tweet Stored");
 			} else {
@@ -262,6 +265,13 @@ public class DoAnalyse {
 					at.insert(temp.toLowerCase(), "NULL", at.getTweetID(t));
 				}
 			}
+			try {
+				at.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 
 		} else
 			check.add("The statement is not a food post!");
@@ -270,12 +280,6 @@ public class DoAnalyse {
 			check.add("There are mixed sentiments in the post. No sentiments captured.");
 		}
 		
-		try {
-			at.closeConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return check;
 
