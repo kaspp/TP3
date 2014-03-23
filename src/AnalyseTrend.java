@@ -253,8 +253,11 @@ public class AnalyseTrend {
 				pStmt.setString(1, t.getUsername());
 				pStmt.setString(2, t.getContent());
 				pStmt.setString(3, t.getLocation());
-				pStmt.setDouble(4, t.getGeo().getLongitude());
-				pStmt.setDouble(5, t.getGeo().getLatitude());
+				if(t.getGeo() != null)
+				{
+					pStmt.setDouble(4, t.getGeo().getLongitude());
+					pStmt.setDouble(5, t.getGeo().getLatitude());
+				}
 				pStmt.setString(6, t.getDate().toString());
 
 				return (pStmt.executeUpdate() > 0);

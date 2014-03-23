@@ -41,6 +41,9 @@ public final class sporeTweetEnglish {
 	 * @param args
 	 */
 	public static void main(String[] args) throws TwitterException {
+		
+		final DoAnalyse da = new DoAnalyse();
+		
 		TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
 		
 		final ExecutorService executor = Executors.newFixedThreadPool(5);
@@ -68,7 +71,7 @@ public final class sporeTweetEnglish {
 			public void onStatus(Status status) {
 				//do something here.
 				
-				Runnable worker = new WorkerThread(status);
+				Runnable worker = new WorkerThread(status, da.getCollate());
 				executor.execute(worker);
 				
 				

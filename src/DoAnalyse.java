@@ -9,7 +9,7 @@ public class DoAnalyse {
 	ArrayList<String> pos = new ArrayList<String>();
 	ArrayList<String> restr = new ArrayList<String>();
 	ArrayList<String> ct = new ArrayList<String>();
-	ArrayList<ArrayList<String>> collate = new ArrayList<ArrayList<String>>();
+	private ArrayList<ArrayList<String>> collate = new ArrayList<ArrayList<String>>();
 	ArrayList<String> chk = new ArrayList<String>();
 	ArrayList<String> check;
 	AnalyseTrend at = new AnalyseTrend();
@@ -19,6 +19,24 @@ public class DoAnalyse {
 		init();
 
 	}
+	
+	
+	public DoAnalyse(ArrayList<ArrayList<String>> collate)
+	{
+		db = new ConnectToDB();
+		setCollate(collate);
+		
+	}
+	public ArrayList<ArrayList<String>> getCollate() {
+		return collate;
+	}
+
+
+	public void setCollate(ArrayList<ArrayList<String>> collate) {
+		this.collate = collate;
+	}
+
+
 	/**
 	 * Clear everything inside the cache.
 	 * @author kaspp - Derrick
@@ -180,7 +198,7 @@ public class DoAnalyse {
 
 				case 3:
 					check.add("Cooking terms found");
-					thatFood.add(wordcheck);
+//					thatFood.add(wordcheck);
 					break;
 
 				case 4:
@@ -274,7 +292,7 @@ public class DoAnalyse {
 	public int checkWord(String word) {
 
 		int count = 0;
-		for (ArrayList<String> p : collate) {
+		for (ArrayList<String> p : getCollate()) {
 			count++;
 			if (p.contains(word.toUpperCase())) {
 				//System.out.println("Found " + word);
@@ -301,12 +319,12 @@ public class DoAnalyse {
 			e.printStackTrace();
 		}
 		
-		collate.add(food);
-		collate.add(country);
-		collate.add(ct);
-		collate.add(neg);
-		collate.add(pos);
-		collate.add(restr);
+		getCollate().add(food);
+		getCollate().add(country);
+		getCollate().add(ct);
+		getCollate().add(neg);
+		getCollate().add(pos);
+		getCollate().add(restr);
 
 	}
 	

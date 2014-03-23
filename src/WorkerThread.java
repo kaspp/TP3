@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import twitter4j.Status;
 import twitter4j.User;
 
@@ -6,11 +8,13 @@ public class WorkerThread implements Runnable{
 	
 	private Tweet t = new Tweet();
 	Status status;
-	DoAnalyse da = new DoAnalyse();
+//	DoAnalyse da = new DoAnalyse();
+	DoAnalyse da;
 	AnalyseTrend at = new AnalyseTrend();
 	
-	public WorkerThread(Status s)  {
+	public WorkerThread(Status s, ArrayList<ArrayList<String>> collate)  {
 		this.status = s;
+		da = new DoAnalyse(collate);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class WorkerThread implements Runnable{
 				+ " Long: " + t.getGeo().getLongitude());
 		} 	
 		System.out.println("Created Date: " + t.getDate().toString());
-		DoAnalyse da = new DoAnalyse();
+		//DoAnalyse da = new DoAnalyse();
 		da.checkTweet(t);
 		System.out.println("\n#####################################");
 		System.out.println(Thread.currentThread().getName() + " Ended!");
