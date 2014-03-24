@@ -5,13 +5,13 @@ import twitter4j.User;
 
 
 public class WorkerThread implements Runnable{
-	
+
 	private Tweet t = new Tweet();
 	Status status;
-//	DoAnalyse da = new DoAnalyse();
+	//	DoAnalyse da = new DoAnalyse();
 	DoAnalyse da;
 	//AnalyseTrend at = new AnalyseTrend();
-	
+
 	public WorkerThread(Status s, ArrayList<ArrayList<String>> collate)  {
 		this.status = s;
 		da = new DoAnalyse(collate);
@@ -53,14 +53,15 @@ public class WorkerThread implements Runnable{
 		System.out.println("Tweet: " + t.getContent());
 
 		if (t.getGeo() != null) {
-		System.out.println("Lang: " + t.getGeo().getLatitude()
-				+ " Long: " + t.getGeo().getLongitude());
-		} 	
-		System.out.println("Created Date: " + t.getDate().toString());
-		//DoAnalyse da = new DoAnalyse();
-		da.checkTweet(t);
+			System.out.println("Lang: " + t.getGeo().getLatitude()
+					+ " Long: " + t.getGeo().getLongitude());
+
+			System.out.println("Created Date: " + t.getDate().toString());
+			//DoAnalyse da = new DoAnalyse();
+			da.checkTweet(t);
+		}
 		System.out.println("\n#####################################");
 		System.out.println(Thread.currentThread().getName() + " Ended!");
-		
+
 	}
 }
