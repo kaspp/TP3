@@ -127,20 +127,20 @@ public class DoAnalyse {
 		// added new line here only.
 		if (fp) {
 			check.add("The statement is a food post!");
-			AnalyseTrend at = new AnalyseTrend();
+			/*AnalyseTrend at = new AnalyseTrend();
 			if (senti == 2) {
 				for (String temp : thatFood) {
-					at.insert(temp, "positive", 0);
+					at.insert(temp.toLowerCase(), "positive", 0);
 				}
 			} else if (senti == 1){
 				for (String temp : thatFood) {
-					at.insert(temp, "negative", 0);
+					at.insert(temp.toLowerCase(), "negative", 0);
 				}
 			}
 			
 			else if (senti == 0) {
 				for (String temp : thatFood) { 
-					at.insert(temp, "NULL", 0);
+					at.insert(temp.toLowerCase(), "NULL", 0);
 				}
 			}
 			
@@ -150,7 +150,7 @@ public class DoAnalyse {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+*/
 		} else
 			check.add("The statement is not a food post!");
 		
@@ -316,12 +316,12 @@ public class DoAnalyse {
 		pos = db.getPos();
 		restr = db.getRestr();
 		
-		try {
+		/*try {
 			db.closeConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		getCollate().add(food);
 		getCollate().add(country);

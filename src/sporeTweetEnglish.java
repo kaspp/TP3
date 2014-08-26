@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,6 +44,13 @@ public final class sporeTweetEnglish {
 	public static void main(String[] args) throws TwitterException {
 		
 		final DoAnalyse da = new DoAnalyse();
+		
+		try {
+			da.db.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
 		
@@ -99,7 +107,6 @@ public final class sporeTweetEnglish {
 
 		twitterStream.addListener(listener);
 		twitterStream.filter(fq);
-		//executor.shutdown();
 		while(!executor.isTerminated());
 
 	}
